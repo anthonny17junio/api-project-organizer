@@ -1,24 +1,16 @@
-# micronaut-pg-maven-example
+# Project Organizer API - Anthonny Pazmiño
 Micronaut + PostgreSQL + Maven
 
-1. Run `docker-compose up -d`
-1. Run `./mvnw install`
-1. Run `java -jar target/pg-example-0.1.jar`
-
 # CRUD
-## Get All Users
+## Get All Tasks from a project
 ```
-curl http://localhost:7777/users
+curl http://localhost:7777/task/1
 ```
-## Get User
+## Insert Task
 ```
-curl http://localhost:7777/users/1
+curl -XPOST http://localhost:7777/task -H "Content-Type: application/json" -d '{"name": "Task name", "description": "Description task", "projectId": 3}'
 ```
-## Create/Update User
+## Delete Task
 ```
-curl -XPOST http://localhost:7777/users -H "Content-Type: application/json" -d '{"id":1,"username":"Vasya"}'
-```
-## Delete User
-```
-curl -XDELETE http://localhost:7777/users/1
+curl -XDELETE http://localhost:7777/task/1
 ```
