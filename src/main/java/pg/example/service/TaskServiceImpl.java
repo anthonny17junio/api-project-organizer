@@ -1,7 +1,5 @@
 package pg.example.service;
 
-import io.reactiverse.pgclient.PgPoolOptions;
-import io.reactiverse.reactivex.pgclient.PgClient;
 import io.reactiverse.reactivex.pgclient.PgIterator;
 import io.reactiverse.reactivex.pgclient.PgPool;
 import io.reactiverse.reactivex.pgclient.PgRowSet;
@@ -33,7 +31,21 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public boolean insertTask(Task task) {
         String sqlQuery = "INSERT INTO task (name, description, id_project) VALUES ($1, $2, $3)";
-        client.preparedQuery(sqlQuery, Tuple.of(task.getName(), task.getDescription(), (long) task.getProjectId()), ar -> {
+        client.preparedQuery(sqlQuery, Tuple.of(task.getName(), task.getDescription(), task.getProjectId()), ar -> {
+            if (ar.succeeded()) {
+                PgRowSet rows = ar.result();
+                System.out.println(rows.rowCount());
+            } else {
+                System.out.println("Failure: " + ar.cause().getMessage());
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean updateTask(Task task) {
+        String sqlQuery = "UPDATE task SET name=$1, description=$2 WHERE id=$3" ;
+        client.preparedQuery(sqlQuery, Tuple.of(task.getName(), task.getDescription(), task.getId()), ar -> {
             if (ar.succeeded()) {
                 PgRowSet rows = ar.result();
                 System.out.println(rows.rowCount());
@@ -46,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean deleteTask(long taskId) {
-        client.preparedQuery("DELETE FROM task WHERE id=$1", Tuple.of((long) taskId), ar -> {
+        client.preparedQuery("DELETE FROM task WHERE id=$1", Tuple.of(taskId), ar -> {
             if (ar.succeeded()) {
                 PgRowSet rows = ar.result();
                 System.out.println(rows.rowCount());

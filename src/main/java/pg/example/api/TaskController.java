@@ -21,14 +21,20 @@ public class TaskController {
 
     @Get("/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Task> tasks(long projectId) {
+    public List<Task> list(long projectId) {
         return crudService.getTasks(projectId);
     }
 
-    @Post("/")
+    @Post()
     @Consumes(MediaType.APPLICATION_JSON)
     public HttpStatus save(@Body Task task) {
         return crudService.insertTask(task) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+    }
+
+    @Put()
+    @Consumes(MediaType.APPLICATION_JSON)
+    public HttpStatus update(@Body Task task) {
+        return crudService.updateTask(task) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
     }
 
     @Delete("/{taskId}")

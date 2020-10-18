@@ -7,6 +7,7 @@ import java.util.List;
 public interface TaskService {
 
     List<Task> getTasks(long projectId);
-    boolean insertTask(Task user);
+    boolean insertTask(Task task);
+    boolean updateTask(Task task);
     boolean deleteTask(long userId);
 }
