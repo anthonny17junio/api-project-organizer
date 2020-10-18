@@ -1,4 +1,4 @@
-package pg.example.model;
+package pg.projectOrganizer.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

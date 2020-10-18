@@ -1,4 +1,4 @@
-package pg.example.dataAccess;
+package pg.projectOrganizer.dataAccess;
 
 import io.reactiverse.pgclient.PgPoolOptions;
 import io.reactiverse.reactivex.pgclient.PgClient;

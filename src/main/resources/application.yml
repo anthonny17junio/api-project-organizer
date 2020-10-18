@@ -3,3 +3,17 @@ micronaut:
         name: pg-project-organizer-api
     server:
         port: 7777
+    security:
+        enabled: true
+        endpoints:
+            login:
+                enabled: true
+        token:
+            jwt:
+                enabled: true
+                signatures:
+                    secret:
+                        generator:
+                            secret: pleaseChangeThisSecretForANewOne
+                            jws-algorithm: HS256
+                            access-token-expiration: 1000

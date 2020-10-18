@@ -1,6 +1,6 @@
-package pg.example.service;
+package pg.projectOrganizer.service;
 
-import pg.example.model.Task;
+import pg.projectOrganizer.model.Task;
 
 import java.util.List;
 

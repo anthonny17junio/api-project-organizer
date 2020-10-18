@@ -1,5 +1,6 @@
-profile: service
+applicationType: default
 defaultPackage: pg.example
----
 testFramework: junit
 sourceLanguage: java
+buildTool: maven
+features: [app-name, docker, shade, netty-server, logback, http-client, java, junit, maven, yaml, readme]

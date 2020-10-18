@@ -1,14 +1,17 @@
-package pg.example.api;
+package pg.projectOrganizer.api;
 
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.HttpStatus;
-import pg.example.model.Task;
-import pg.example.service.TaskServiceImpl;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
+import pg.projectOrganizer.model.Task;
+import pg.projectOrganizer.service.TaskServiceImpl;
 
 import javax.inject.Inject;
 import java.util.List;
 
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/task")
 public class TaskController {
 
@@ -27,7 +30,7 @@ public class TaskController {
 
     @Post()
     @Consumes(MediaType.APPLICATION_JSON)
-    public HttpStatus save(@Body Task task) {
+    public HttpStatus insertTask(@Body Task task) {
         return crudService.insertTask(task) ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
     }
 

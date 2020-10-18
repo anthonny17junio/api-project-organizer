@@ -1,4 +1,4 @@
-package pg.example;
+package pg.projectOrganizer;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.HttpStatus;
@@ -14,10 +14,10 @@ public class TaskControllerTest {
 
     @Ignore
     @Test
-    public void testIndex() throws Exception {
-        try(EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class)) {
-            try(RxHttpClient client = server.getApplicationContext().createBean(RxHttpClient.class, server.getURL())) {
-                assertEquals(HttpStatus.OK, client.toBlocking().exchange("/CRUD").status());
+    public void testIndex() {
+        try (EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class)) {
+            try (RxHttpClient client = server.getApplicationContext().createBean(RxHttpClient.class, server.getURL())) {
+                assertEquals(HttpStatus.OK, client.toBlocking().exchange("/task").status());
             }
         }
     }

@@ -1,15 +1,15 @@
-package pg.example.service;
+package pg.projectOrganizer.service;
 
 import io.reactiverse.reactivex.pgclient.PgIterator;
 import io.reactiverse.reactivex.pgclient.PgPool;
 import io.reactiverse.reactivex.pgclient.PgRowSet;
 import io.reactiverse.reactivex.pgclient.Row;
 import io.reactiverse.reactivex.pgclient.Tuple;
-import pg.example.dataAccess.PostgreSQLClient;
-import pg.example.model.Task;
+import pg.projectOrganizer.dataAccess.PostgreSQLClient;
+import pg.projectOrganizer.model.Task;
 
 import javax.inject.Singleton;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -19,13 +19,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getTasks(long projectId) {
-        List<Task> Tasks = new LinkedList<>();
+        List<Task> tasks = new ArrayList<>();
         PgIterator pgIterator = client.rxPreparedQuery("SELECT * FROM task WHERE id_project=" + projectId).blockingGet().iterator();
         while (pgIterator.hasNext()) {
             Row row = pgIterator.next();
-            Tasks.add(new Task(row.getLong("id"), row.getString("name"), row.getString("description"), row.getLong("id_project")));
+            tasks.add(new Task(row.getLong("id"), row.getString("name"), row.getString("description"), row.getLong("id_project")));
         }
-        return Tasks;
+        return tasks;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public boolean updateTask(Task task) {
-        String sqlQuery = "UPDATE task SET name=$1, description=$2 WHERE id=$3" ;
+        String sqlQuery = "UPDATE task SET name=$1, description=$2 WHERE id=$3";
         client.preparedQuery(sqlQuery, Tuple.of(task.getName(), task.getDescription(), task.getId()), ar -> {
             if (ar.succeeded()) {
                 PgRowSet rows = ar.result();

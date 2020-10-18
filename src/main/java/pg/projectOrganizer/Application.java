@@ -1,4 +1,4 @@
-package pg.example;
+package pg.projectOrganizer;
 
 import io.micronaut.runtime.Micronaut;
 
