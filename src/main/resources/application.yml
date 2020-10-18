@@ -1,0 +1,5 @@
+micronaut:
+    application:
+        name: pg-project-organizer-api
+    server:
+        port: 7777
